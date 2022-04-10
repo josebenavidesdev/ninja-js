@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Objetos</title>
+  <style>
+    body { background-color: #9FC088; }
+  </style>
+</head>
+<body>
+  <script>
+    const persona = {
+      nombre: "Pablo",
+      apellido: "Castellanos",
+      telefono: 666777999,
+      edad: 26
+    }
+
+    console.log(persona.nombre);
+
+    // A pesar que es una constante puedo modificar el valor de uno de sus atributos
+    // pero no la constante en general
+    persona.nombre = "Pabolo";
+
+    console.log(persona.nombre);
+
+    const IGV_GENERAL = 1.21;
+    const IGV_REDUCIDO = 1.10;
+
+    const item1 = {
+      precio: 15,
+      cantidad: 2,
+      impuestos: IGV_GENERAL,
+      calcularTotal() {
+        return this.precio * this.cantidad * this.impuestos;
+      }
+    }
+
+    const item2 = {
+      precio: 25,
+      cantidad: 3,
+      impuestos: IGV_REDUCIDO,
+      calcularTotal() {
+        return this.precio * this.cantidad * this.impuestos;
+      }
+    }
+
+    const item3 = item2;  // los dos apuntan a la misma referencia en memoria
+    item3.precio = 30;
+
+    console.log("cambia el precio de item2:", item2.precio);  // 30 porque al modificar item3 afecta a item2
+
+    const factura = {
+      item1,
+      item2,
+      calcularTotal() {
+        return this.item1.calcularTotal() + this.item2.calcularTotal()
+      }
+    }
+
+    console.log(factura);
+    console.log(item1.calcularTotal());
+    console.log(item2.calcularTotal());
+    console.log(factura.calcularTotal());
+
+    window.console.log("Hola!");
+  </script>
+</body>
+</html>
