@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Async Await</title>
+  <style>
+    body { background-color: floralwhite; }
+  </style>
+</head>
+<body>
+  <script>
+    const convertirANumero = n => Number(n);
+    const elevarAlCuadrado = n => n ** 2;
+    const imprimirNumero = n => console.log(n);
+
+    const peticion = url => {
+      return new Promise((resolve, reject) => {
+        const peticion = new XMLHttpRequest();
+        peticion.open("GET", url);
+
+        peticion.onload = () => {
+          if (peticion.status === 200)
+            resolve(peticion.responseText);
+          else
+            reject(new Error("Error al cargar!"));
+        }
+
+        peticion.onerror = () => {
+          reject(new Error("Error de red")); 
+        }
+
+        peticion.send();
+      });
+    }
+
+    const llamar = async (url) => {
+      try {      
+        const respuesta1 = await peticion(url);
+        const respuesta2 = await peticion(url);
+
+        const numero1 = convertirANumero(respuesta1);
+        const numero2 = convertirANumero(respuesta2);
+
+        console.log(numero1 * numero2);
+      } catch(error) {
+        console.log(error);
+      } finally {
+        console.log("Se acabo la petición");
+      }
+    }
+
+    llamar("./numero.txt");
+  </script>
+</body>
+</html>
