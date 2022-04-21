@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XMlHttpRequest</title>
+  <style>
+    body { background-color: floralwhite; }
+  </style>
+</head>
+<body>
+  <script>
+    const convertirNumero = n => Number(n);
+    const multiplicarPorDos = n => n * 2;
+    const imprimir = n => console.log(n);
+
+    const funcionLuego = n => {
+      let numero = convertirNumero(n);
+      numero = multiplicarPorDos(numero);
+      imprimir(numero);
+    }
+
+    const capturarError = mensaje => console.log(mensaje);
+
+    const hacerPeticion = (url, luego, error) => {
+      const peticion = new XMLHttpRequest();
+
+      peticion.open("GET", url);
+
+      // Se dispara cuando una petición se ha completado correctamente.
+      peticion.onload = () => {
+        if (peticion.status === 200) {
+          luego(peticion.responseText);
+        } else {
+          error(new Error("Error al cargar!"));
+        }
+      }
+
+      // Se dispara cuando una petición sufre un error.
+      peticion.onerror = () => error(new Error("Error de red!"));
+
+      peticion.send();
+    }
+
+    hacerPeticion("./numero.txt", funcionLuego, capturarError);
+    // hacerPeticion("./numero2.txt", funcionLuego, capturarError);
+    // hacerPeticion("http://meloinvento.com/a.txt", funcionLuego, capturarError);
+  </script>
+</body>
+</html>
