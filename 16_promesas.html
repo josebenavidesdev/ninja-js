@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Promesas</title>
+  <style>
+    body { background-color: floralwhite; }
+  </style>
+</head>
+<body>
+  <script>
+    const convertirANumero = n => Number(n);
+    const elevarAlCuadrado = n => n ** 2;
+    const imprimirNumero = n => console.log(n);
+
+    const peticion = url => {
+      return new Promise((resolve, reject) => {
+        const peticion = new XMLHttpRequest();
+        peticion.open("GET", url);
+
+        peticion.onload = () => {
+          if (peticion.status === 200)
+            resolve(peticion.responseText);
+          else
+            reject(new Error("Error al cargar!"));
+        }
+
+        peticion.onerror = () => {
+          reject(new Error("Error de red")); 
+        }
+
+        peticion.send();
+      });
+    }
+
+    peticion("./numero.txt")
+      .then(convertirANumero)
+      .then(elevarAlCuadrado)
+      .then(imprimirNumero)
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        console.log("Se acabo la petición");
+      });
+  </script>
+</body>
+</html>
