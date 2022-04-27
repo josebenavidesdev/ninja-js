@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("El documento se ha cargado")
 })
 
+// -----------------------------------------------------------------------------
+
 const formulario = document.getElementById("form")
 
 function enviarFormulario(evento) {
@@ -32,3 +34,16 @@ function enviarFormulario(evento) {
 }
 
 formulario.addEventListener("submit", enviarFormulario)
+// -----------------------------------------------------------------------------
+
+const seccion = document.getElementById("section")
+const tituloSeccion = document.getElementById("section-title")
+
+seccion.addEventListener("click", function (e) {
+  console.log("click en la SECCION")
+})
+
+tituloSeccion.addEventListener("click", function (e) {
+  e.stopPropagation()  // deteniendo el bubbling
+  console.log("click en el TITULO")
+})
